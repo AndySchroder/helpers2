@@ -39,11 +39,21 @@ def irange(start=None,stop=None,step=1):
 	return range(start,stop+1,step)			#note, range's stop (actually stop-1) value is the maximum it can get to, but will be less if stop-1-step is not a multiple of step
 
 
+def IndentedPrettyPrint(message,prettyprintprepend='',PrettyPrint=True):
+	"""Prints `prettyprintprepend` and then puts `message` on a new line and indents it.
+	`prettyprintprepend` is intended to be used to give a label to `message`."""
+	IndentedAmount = '                                                        '		# <-------- a lot of space for indention !
+
+	if PrettyPrint:				# use for pretty printing dictionaries and such.
+		return prettyprintprepend+'\n'+indent(pformat(message),IndentedAmount)
+	else:						# use for regular strings
+		return prettyprintprepend+'\n'+indent(message,IndentedAmount)
+
 def TimeStampedPrint(message,prettyprintprepend='',prettyprint=False):
 	"""Print a message, prepending it with the date and time down to the millisecond."""
 	if PrintWarningMessages:
 		if prettyprint:
-			message=prettyprintprepend+'\n'+indent(pformat(message),'                                   ')
+			message=IndentedPrettyPrint(message,prettyprintprepend)
 		print(datetime.now().strftime('%Y.%m.%d--%H.%M.%S.%f')		+':   '+message)		#need to use datetime instead of time module to get fractions of a second
 
 

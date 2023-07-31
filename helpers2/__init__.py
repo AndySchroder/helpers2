@@ -61,6 +61,8 @@ def RoundAndPadToString(Value,DecimalPlaces=3,LeftPad=None,PadCharacter=' ',Show
 	"""Round a number to so many decimal places and zero pad if necessary and convert to a string."""
 	LeftPadding=''
 	if LeftPad is not None:
+		if Value<0 and LeftPad>0:	# treat the negative sign as part of the padding.
+			LeftPad-=1
 		#pad digits left of decimal place (LeftPad=2 for example converts "0.1" to " 0.1") up to this digit
 		for digit in irange(2,LeftPad):				#skip the first digit, even if specified because it will always be there (will be a 0 if the value is less than 1) with the current formatting method used below
 			if Value<10.0**(digit-1):
